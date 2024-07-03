@@ -1,9 +1,9 @@
-package service;
+package com.example.CRUD.service;
 
-import model.Persona;
+import com.example.CRUD.model.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.PersonaRepository;
+import com.example.CRUD.repository.PersonaRepository;
 
 
 import java.util.Optional;

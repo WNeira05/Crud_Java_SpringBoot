@@ -1,10 +1,10 @@
-package controller;
+package com.example.CRUD.controller;
 
-import model.Persona;
+import com.example.CRUD.model.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.PersonaService;
+import com.example.CRUD.service.PersonaService;
 
 import java.util.Optional;
 
