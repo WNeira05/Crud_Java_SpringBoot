@@ -2,6 +2,7 @@ package com.example.CRUD.controller;
 
 import com.example.CRUD.model.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.CRUD.service.PersonaService;
@@ -21,9 +22,14 @@ public class PersonaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Persona> getPersona(@PathVariable Long id) {
+    public ResponseEntity<?> getPersona(@PathVariable Long id) {
         Optional<Persona> persona = personaService.getPersona(id);
-        return persona.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (persona.isPresent()) {
+            return ResponseEntity.ok(persona.get());
+        } else {
+            String errorMessage = "La persona con el ID " + id + " no existe.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        }
     }
 
     @GetMapping
@@ -32,9 +38,15 @@ public class PersonaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePersona(@PathVariable Long id) {
-        personaService.deletePersona(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deletePersona(@PathVariable Long id) {
+        Optional<Persona> persona = personaService.getPersona(id);
+        if (persona.isPresent()) {
+            personaService.deletePersona(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            String errorMessage = "La persona con el ID " + id + " no existe.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        }
     }
 
     @PutMapping("/{id}")
